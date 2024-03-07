@@ -1,0 +1,99 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location:../login.php");
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylindx.css">
+    <link rel="icon" href="#">
+    <title> DIGITAL LIBRARY </title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Digital Library</h2>
+        </div>
+
+        <div class="row">
+            <div class="left">
+                <a href='?url=homepage'>Beranda</a>
+                <a href='?url=buku'>Data Buku</a>
+                <a href='?url=pinjam'>Pinjam Buku</a>
+                <a href='?url=report'>Laporan</a>
+                <a id="logout" href="../logout.php">Log Out</a>
+            </div>
+
+            <div class="homepage">
+                <h3 id="title">HOMEPAGE</h3>
+                <hr class="horizontal-line">
+
+                <h4 class="text">REPORT</h4>
+                <div class="row-container">
+                    <h4>Jumlah Total Buku : 15</h4>
+                    <h4>Jumlah Total Buku : 15</h4>
+                    <h4>Jumlah Total Buku : 15</h4>
+                    <h4>Jumlah Total Buku : 15</h4>
+                    <h4>Jumlah Total Buku : 15</h4>
+                </div>
+
+                <h4 class="text">
+                    <TABLE< /TAble>
+                </h4>
+                <div class="overflow-table">
+                    <table>
+                        <tr>
+                            <th>No</th>
+                            <th>Judul Buku</th>
+                            <th>Kategori</th>
+                            <th>Penulis</th>
+                            <th>Penerbit</th>
+                            <th>Tahun Terbit</th>
+                        </tr>
+
+                        <?php
+                        include "../koneksi.php";
+                        $no = 1;
+                        $sql = mysqli_query($conn, "SELECT * FROM buku");
+                        while ($data = mysqli_fetch_array($sql)) {
+                            echo " <tr>
+                         <td>$data[judul]</td>
+                        <td>$data[kategori]</td>
+                        <td>$data[penulis]</td>
+                        <td>$data[penerbit]</td>
+                        <td>$data[tahun_terbit]</td>
+                        </tr>";
+                            $no++;
+                        }
+                        ?>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class='content-box'>
+            <?php
+            if (!isset($_GET[url])) {
+                $url = $_GET[url];
+
+                switch ($url) {
+                    case 'buku':
+                        include 'buku.php';
+                        break;
+                    case 'pinjam':
+                        include 'pinjam.php';
+                        break;
+                }
+            }
+            ?>
+        </div>
+        < </div>
+</body>
+
+</html>
